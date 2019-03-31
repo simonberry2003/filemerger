@@ -23,17 +23,18 @@ public class StatefulBeanToCsv<T> {
 		String separator = "";
 		for (Field field : fields) {
 			CsvBindByName binder = field.getAnnotation(CsvBindByName.class);
-			sb.append(binder.column());
 			sb.append(separator);
+			sb.append(binder.column());
 			separator = ",";
 		}
 		sb.append("\n");
 		writer.write(sb.toString());
 
-		separator = "";
 		for (T row : rows) {
+			separator = "";
 			sb = new StringBuilder();
 			for (Field field : fields) {
+				sb.append(separator);
 				field.setAccessible(true);
 				Object rowValue = field.get(row);
 				if (rowValue instanceof String && !((String) rowValue).startsWith(quoteChar)) {
@@ -43,7 +44,6 @@ public class StatefulBeanToCsv<T> {
 				if (rowValue instanceof String && !((String) rowValue).endsWith(quoteChar)) {
 					sb.append(quoteChar);
 				}
-				sb.append(separator);
 				separator = ",";
 			}
 			sb.append("\n");
