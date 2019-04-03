@@ -10,8 +10,8 @@ public class CsvToBeanBuilder<T> {
 	private Reader reader;
 	private Class<?> clazz;
 	private String separator;
-	private boolean ignoreWhiteSpace;
 	private boolean skipFirstRow;
+	private boolean keepQuotes;
 
 	public CsvToBeanBuilder(FileReader reader) {
 		this.reader = Preconditions.checkNotNull(reader);
@@ -27,18 +27,17 @@ public class CsvToBeanBuilder<T> {
 		return this;
 	}
 
-	public CsvToBeanBuilder<T> withIgnoreWhiteSpace(boolean ignoreWhiteSpace) {
-		this.ignoreWhiteSpace = ignoreWhiteSpace;
-		return this;
-	}
-
 	public CsvToBeanBuilder<T> skipFirstRow(boolean skipFirstRow) {
 		this.skipFirstRow = skipFirstRow;
 		return this;
 	}
 
-	public CsvToBean<T> build() {
-		return new CsvToBean<T>(reader, clazz, separator, ignoreWhiteSpace, skipFirstRow);
+	public CsvToBeanBuilder<T> keepQuotes() {
+		this.keepQuotes = true;
+		return this;
 	}
 
+	public CsvToBean<T> build() {
+		return new CsvToBean<T>(reader, clazz, separator, skipFirstRow, keepQuotes);
+	}
 }

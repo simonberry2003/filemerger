@@ -94,7 +94,7 @@ public class FileMerger {
             CsvToBean<Product> csvToBean = new CsvToBeanBuilder<Product>(reader)
                 .withType(Product.class)
                 .withSeparator(",")
-                .withIgnoreWhiteSpace(true)
+                .keepQuotes()
                 .skipFirstRow(true)
                 .build();
             csvToBean.iterator().forEachRemaining(p -> {
@@ -113,7 +113,6 @@ public class FileMerger {
             CsvToBean<Track> csvToBean = new CsvToBeanBuilder<Track>(reader)
             	.withSeparator("|")
                 .withType(Track.class)
-                .withIgnoreWhiteSpace(true)
                 .build();
             csvToBean.iterator().forEachRemaining(t -> {
             	if (t.getSku() != null && skus.contains(t.getSku())) {
@@ -131,7 +130,6 @@ public class FileMerger {
             CsvToBean<Note> csvToBean = new CsvToBeanBuilder<Note>(reader)
             	.withSeparator("|")
                 .withType(Note.class)
-                .withIgnoreWhiteSpace(true)
                 .build();
             csvToBean.iterator().forEachRemaining(n -> {
             	if (skus.contains(n.getSku())) {

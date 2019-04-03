@@ -13,11 +13,11 @@ public class CsvToBean<T> implements Iterable<T> {
 	private final @NonNull Reader reader;
 	private final @NonNull Class<?> clazz;
 	private final @NonNull String separator;
-	private final boolean ignoreWhiteSpace;
 	private final boolean skipFirstRow;
+	private final boolean keepQuotes;
 
 	@Override
 	public Iterator<T> iterator() {
-		return new CsvBeanIterator<T>(new BufferedReader(reader), clazz, separator, ignoreWhiteSpace, skipFirstRow);
+		return new CsvBeanIterator<T>(new BufferedReader(reader), clazz, separator, skipFirstRow, keepQuotes);
 	}
 }
